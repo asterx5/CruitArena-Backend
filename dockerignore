@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/*.user
+**/.DS_Store
+**/node_modules/
+README.md
+.git/
+.gitignore

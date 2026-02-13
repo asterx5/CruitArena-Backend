@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: cruitarena-backend
+    env: docker
+    region: frankfurt # Change to your preferred region
+    plan: starter # Free tier
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:$PORT
+      - key: ASPNETCORE_HTTP_PORTS
+        value: $PORT
+    healthCheckPath: /health
