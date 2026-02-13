@@ -36,6 +36,7 @@ public class GameHub : Hub
     /// </summary>
     public async Task CreateRoom(string playerName, string masterRuleId)
     {
+        Console.WriteLine($"{playerName} creating room with masterRuleId {masterRuleId}");
         var room = _rooms.CreateRoom(Context.ConnectionId, playerName, masterRuleId);
         await Groups.AddToGroupAsync(Context.ConnectionId, $"room_{room.Id}");
         await Clients.Caller.SendAsync("RoomCreated", room.Id);
