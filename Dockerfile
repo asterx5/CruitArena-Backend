@@ -1,24 +1,19 @@
-# Use the official .NET 8 SDK image for building
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy csproj and restore dependencies
-COPY *.csproj ./
-RUN dotnet restore
-
-# Copy everything else and build
+# Copy everything
 COPY . ./
-RUN dotnet publish -c Release -o /app/publish
 
-# Build runtime image
+# Find and restore the first .csproj file
+RUN dotnet restore $(find . -name "*.csproj" -not -path "*/obj/*" | head -1)
+
+# Find and publish the first .csproj file
+RUN dotnet publish $(find . -name "*.csproj" -not -path "*/obj/*" | head -1) -c Release -o /app/publish
+
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-
-# Copy published app
 COPY --from=build /app/publish .
-
-# Expose port (Render will inject PORT env variable)
 EXPOSE $PORT
 
-# Run the app
-ENTRYPOINT ["dotnet", "CruitArena.Server.dll"]
+# Auto-detect DLL name and run
+CMD dotnet $(ls *.dll | head -1)
