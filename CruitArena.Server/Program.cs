@@ -34,6 +34,6 @@ app.UseCors();
 app.MapHub<GameHub>("/gamehub");
 
 // Simple health check endpoint
-app.MapGet("/", () => "CruitArena Server is running");
+//app.MapGet("/", () => "CruitArena Server is running");
 
 app.Run();
