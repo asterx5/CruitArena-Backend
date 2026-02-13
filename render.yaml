@@ -12,4 +12,3 @@ services:
         value: http://0.0.0.0:$PORT
       - key: ASPNETCORE_HTTP_PORTS
         value: $PORT
-    healthCheckPath: /health
